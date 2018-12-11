@@ -21,5 +21,5 @@ reducePolymer ys (x1:x2:xs) | isDestroyed x1 x2 = reducePolymer (init ys) ([(las
 main :: IO()
 main = do 
     input <- readFile "data05.txt"
-    let smallestPoly = zipWith (\x y -> length $ reducePolymer [] (filterPolymer x y) ) ['a'..'z'] (replicate 24 input)
+    let smallestPoly = zipWith (\x y -> length $ reducePolymer [] (filterPolymer x y) ) ['a'..'z'] (repeat input)
     putStrLn $ show $ minimum smallestPoly
