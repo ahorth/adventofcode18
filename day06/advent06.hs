@@ -40,6 +40,12 @@ largestEnclosed grid perimeter = let notPerim = [pt | pt <- grid,
 parsePoint :: String -> Point
 parsePoint ptStr = read $ "Point " ++ [c | c<-ptStr, c /= ',']
 
+distanceTotal pts pt = sum $ manhathanDistances pts pt
+
+largestSmaller :: [Point] -> [Point] -> Int
+largestSmaller grid anchors = let total_dist = distanceTotal anchors in 
+                              length $ filter (<10000) $ map total_dist grid
+
 main :: IO()
 main = do
     parsePts <- readFile "data06.txt"
@@ -55,4 +61,6 @@ main = do
     let closestPointsperim = map (closestPoint pts) perim
     let closestPointsgrid = map (closestPoint pts) grid
     let solution = largestEnclosed  closestPointsgrid closestPointsperim
+    let solutionb = largestSmaller grid pts
     putStrLn $ show solution
+    putStrLn $ show solutionb
