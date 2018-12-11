@@ -31,8 +31,10 @@ gridPoints :: Point -> Point -> [Point]
 gridPoints (Point x1 y1) (Point x2 y2) = [Point x y | x <- [x1..x2], y <- [y1..y2]]
 
 largestEnclosed :: [Maybe Point] -> [Maybe Point] -> Int
-largestEnclosed pts1 pts2 = let notPerim = [pt | pt <- pts2, not (pt `elem` pts1), pt /= Nothing] in 
-                            maximum $ map length (group notPerim)
+largestEnclosed grid perimeter = let notPerim = [pt | pt <- grid,
+                                                      not $ pt `elem` perimeter,
+                                                      pt /= Nothing] in 
+                                  maximum $ map length (group $ sort notPerim)
 
 
 parsePoint :: String -> Point
@@ -52,5 +54,5 @@ main = do
     let grid  = gridPoints topLeftPt botRightPt
     let closestPointsperim = map (closestPoint pts) perim
     let closestPointsgrid = map (closestPoint pts) grid
-    let solution = largestEnclosed closestPointsperim closestPointsgrid
+    let solution = largestEnclosed  closestPointsgrid closestPointsperim
     putStrLn $ show solution
